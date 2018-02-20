@@ -6,7 +6,7 @@ import com.pff.*;
 
 public class Main {
 	public static void main(String[] args) {
-		String filename = "/Users/jean-baptiste/Desktop/backup.pst";
+		String filename = "";
 		try {
 			PSTFile pstFile = new PSTFile(filename);
 			System.out.println(pstFile.getMessageStore().getDisplayName());
