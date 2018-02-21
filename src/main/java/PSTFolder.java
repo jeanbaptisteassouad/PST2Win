@@ -1,3 +1,5 @@
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class PSTFolder extends PSTItem {
@@ -31,6 +33,45 @@ public class PSTFolder extends PSTItem {
 		}
 		
 		this.weight = res;
+	}
+	
+	public String write_CSVline() {
+		String res = "";
+		
+		res += surr(this.ID);
+		res += del;
+		
+		
+		res += del;
+		
+
+		res += del;
+		
+		
+		res += del;
+		
+		
+		res += surr(this.name);
+		res += del;
+		
+		
+		res += del;
+		
+		
+		res += surr(this.weight);
+		res += del;
+		
+
+		res += del;
+		
+		res += surr(this.parent_folder.ID);
+		res += del;
+		
+		res += surr(this.parent_folder.name);
+		res += del;
+		
+		
+		return res;
 	}
 
 }

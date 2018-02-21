@@ -22,13 +22,5 @@ public class Person {
 		this.name = name;
 
 	}
-	
-	public String get_email() {
-		return this.emailAddress;
-	}
-	
-	public String get_name() {
-		return this.name;
-	}
 
 }

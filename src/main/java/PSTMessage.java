@@ -1,5 +1,7 @@
 
 import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
@@ -48,5 +50,57 @@ public class PSTMessage extends PSTItem {
 		}
 		
 		this.weight = res;
+	}
+	
+	public String write_CSVline() {
+		String res = "";
+		
+		res += surr(this.ID);
+		res += del;
+		
+		res += surr(this.sender.emailAddress);
+		res += del;
+		
+		res += surr(this.sender.name);
+		res += del;
+		
+		ArrayList<String> liste_destinataires = new ArrayList<String>();
+		
+		for(Person d : this.receivers) {
+			liste_destinataires.add(d.name + " <" + d.emailAddress + ">");
+		}
+		
+		res += surr(String.join(", ", liste_destinataires));
+		res += del;
+		
+		res += surr(this.name);
+		res += del;
+		
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		
+		res += surr(df.format(this.send_date));
+		res += del;
+		
+		res += surr(this.weight);
+		res += del;
+		
+		res += surr(this.email_weight);
+		res += del;
+		
+		res += surr(this.parent_folder.ID);
+		res += del;
+		
+		res += surr(this.parent_folder.name);
+		res += del;
+		
+		ArrayList<String> liste_PJs = new ArrayList<String>();
+		
+		for(PSTAttachment PJ : this.attachments) {
+			liste_PJs.add(PJ.name);
+		}
+		
+		res += surr(String.join(", ", liste_PJs));
+		
+		return res;
 	}
 }
