@@ -27,9 +27,9 @@ public class PSTMessage extends PSTItem {
 		this.parent_folder = new PSTFolder();
 	}
 
-	public PSTMessage(String name, int weight, Person sender, ArrayList<Person> receivers, int email_weight, Date send_date, ArrayList<PSTAttachment> attachments, PSTFolder parent_folder) {
-		super(name, weight);
-		
+	public PSTMessage(int ID, String name, Person sender, ArrayList<Person> receivers, int email_weight, Date send_date, ArrayList<PSTAttachment> attachments, PSTFolder parent_folder) {
+		this.ID = ID;
+		this.name = name;
 		this.sender = sender;
 		this.receivers =  receivers;
 		this.email_weight = email_weight;

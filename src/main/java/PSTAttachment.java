@@ -7,21 +7,11 @@ public class PSTAttachment extends PSTItem {
 		super();
 		this.parent_message = new PSTMessage();
 	}
-
-	public PSTAttachment(String name) {
-		super(name);
-		this.parent_message = new PSTMessage();
-		
-	}
-
-	public PSTAttachment(String name, int weight) {
-		super(name, weight);
-		this.parent_message = new PSTMessage();
-		
-	}
 	
-	public PSTAttachment(String name, int weight, PSTMessage parent_message) {
-		super(name, weight);
+	public PSTAttachment(int ID, String name, int weight, PSTMessage parent_message) {
+		this.ID = ID;
+		this.name = name;
+		this.weight = weight;
 		this.parent_message = parent_message;
 		
 	}

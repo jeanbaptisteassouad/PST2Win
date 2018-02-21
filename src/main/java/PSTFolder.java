@@ -3,27 +3,23 @@ import java.util.ArrayList;
 public class PSTFolder extends PSTItem {
 	
 	ArrayList<PSTItem> children;
+	PSTFolder parent_folder;
 
 	
 	public PSTFolder() {
 		super();
 		this.children = new ArrayList<PSTItem>();
-	}
-
-	public PSTFolder(String name) {
-		super(name);
-		this.children = new ArrayList<PSTItem>();
+		this.parent_folder = null;
 	}
 	
-	public PSTFolder(String name, ArrayList<PSTItem> children) {
-		super(name);
+	public PSTFolder(int ID, String name, ArrayList<PSTItem> children, PSTFolder parent_folder) {
+		this.ID = ID;
+		this.name = name;
 		this.children = children;
+		this.parent_folder = parent_folder;
+		
 		this.updateWeight();
-	}
-
-	public PSTFolder(String name, int weight) {
-		super(name, weight);
-		this.children = new ArrayList<PSTItem>();
+		
 	}
 	
 	
