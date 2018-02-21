@@ -18,7 +18,7 @@ public abstract class PSTItem {
 		
 	public abstract String write_CSVline();
 	
-	public static String write_CSV_head() {
+	public static String write_CSVhead() {
 		String res ="";
 		
 		res += surr("ID");
@@ -57,10 +57,11 @@ public abstract class PSTItem {
 	}
 	
 	public static String surr(String s) {
-		return "\"" + s + "\"";
+		return "\"" + (s != null ? s : "") + "\"";
 	}
 	
 	public static String surr(int i) {
 		return "\"" + Integer.toString(i) + "\"";
 	}
+	
 }

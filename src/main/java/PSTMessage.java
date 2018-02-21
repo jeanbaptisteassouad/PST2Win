@@ -45,8 +45,11 @@ public class PSTMessage extends PSTItem {
 	
 	public void updateWeight() {
 		int res = this.email_weight;
-		for(PSTItem item : this.attachments) {
-			res += item.weight;
+		
+		if(this.attachments != null) {
+			for(PSTItem item : this.attachments) {
+				res += item.weight;
+			}
 		}
 		
 		this.weight = res;
@@ -58,27 +61,29 @@ public class PSTMessage extends PSTItem {
 		res += surr(this.ID);
 		res += del;
 		
-		res += surr(this.sender.emailAddress);
+		res += surr(this.sender != null ? this.sender.emailAddress : "");
 		res += del;
 		
-		res += surr(this.sender.name);
+		res += surr(this.sender != null ? this.sender.name : "");
 		res += del;
 		
-		ArrayList<String> liste_destinataires = new ArrayList<String>();
-		
-		for(Person d : this.receivers) {
-			liste_destinataires.add(d.name + " <" + d.emailAddress + ">");
+		if(receivers != null) {
+			ArrayList<String> liste_destinataires = new ArrayList<String>();
+			
+			for(Person d : this.receivers) {
+				liste_destinataires.add(d.name + " <" + d.emailAddress + ">");
+			}
+			
+			res += surr(String.join(", ", liste_destinataires));
 		}
-		
-		res += surr(String.join(", ", liste_destinataires));
 		res += del;
 		
-		res += surr(this.name);
+		res += surr(this.name != null ? this.name : "");
 		res += del;
 		
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		
-		res += surr(df.format(this.send_date));
+		res += surr(this.send_date != null ? df.format(this.send_date) : "");
 		res += del;
 		
 		res += surr(this.weight);
@@ -87,19 +92,21 @@ public class PSTMessage extends PSTItem {
 		res += surr(this.email_weight);
 		res += del;
 		
-		res += surr(this.parent_folder.ID);
+		res += surr(this.parent_folder != null ? this.parent_folder.ID : 0);
 		res += del;
 		
-		res += surr(this.parent_folder.name);
+		res += surr(this.parent_folder != null ? this.parent_folder.name : "");
 		res += del;
 		
-		ArrayList<String> liste_PJs = new ArrayList<String>();
-		
-		for(PSTAttachment PJ : this.attachments) {
-			liste_PJs.add(PJ.name);
+		if(this.attachments != null) {
+			ArrayList<String> liste_PJs = new ArrayList<String>();
+			
+			for(PSTAttachment PJ : this.attachments) {
+				liste_PJs.add(PJ.name);
+			}
+			
+			res += surr(String.join(", ", liste_PJs));
 		}
-		
-		res += surr(String.join(", ", liste_PJs));
 		
 		return res;
 	}

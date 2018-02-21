@@ -28,48 +28,44 @@ public class PSTFolder extends PSTItem {
 	
 	public void updateWeight() {
 		int res = 0;
-		for(PSTItem item : this.children) {
-			res += item.weight;
+		
+		if(this.children != null) {
+			for(PSTItem item : this.children) {
+				res += item.weight;
+			}
 		}
 		
 		this.weight = res;
 	}
 	
 	public String write_CSVline() {
+		
 		String res = "";
 		
 		res += surr(this.ID);
-		res += del;
-		
 		
 		res += del;
-		
+		res += del;
+		res += del;
+		res += del;
 
-		res += del;
-		
-		
-		res += del;
-		
-		
 		res += surr(this.name);
+		
+		res += del;		
 		res += del;
-		
-		
-		res += del;
-		
 		
 		res += surr(this.weight);
+		
+		res += del;
 		res += del;
 		
+		res += surr(this.parent_folder != null ? this.parent_folder.ID : 0);
+		
+		res += del;
 
-		res += del;
+		res += surr(this.parent_folder != null ? this.parent_folder.name : "[racine]");
 		
-		res += surr(this.parent_folder.ID);
 		res += del;
-		
-		res += surr(this.parent_folder.name);
-		res += del;
-		
 		
 		return res;
 	}
