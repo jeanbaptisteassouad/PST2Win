@@ -3,6 +3,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,12 +20,29 @@ public class Fs {
 
   public static Path appendString2Path(Path a, String s) {
     s = escape(s);
-    Debug.log(s);
+    // Debug.log(s);
     return a.resolve(s);
   }
 
   private static String escape(String s) {
     s = s.replaceAll("[ /]","_");
+    s = replaceAllInsensitive(s,"[éèê]","e");
+    s = replaceAllInsensitive(s,"[àâ]","a");
+    s = replaceAllInsensitive(s,"[ç]","c");
+    s = replaceAllInsensitive(s,"[ù]","u");
+    s = replaceAllInsensitive(s,"[î]","i");
+    s = s.replaceAll("[«»]","\"");
+
+
+    byte[] byte_array = s.getBytes(StandardCharsets.US_ASCII);
+    s = new String(byte_array, StandardCharsets.US_ASCII);
+    
+    return s;
+  }
+
+  private static String replaceAllInsensitive(String s,String minRegex, String minReplace) {
+    s = s.replaceAll(minRegex,minReplace);
+    s = s.replaceAll(minRegex.toUpperCase(),minReplace.toUpperCase());
     return s;
   }
 

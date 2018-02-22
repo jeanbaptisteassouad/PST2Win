@@ -1,4 +1,5 @@
 
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -7,13 +8,16 @@ import java.util.Date;
 
 import java.nio.file.Paths;
 
-
 import com.pff.*;
 
-import java.util.*;
+import javax.mail.MessagingException;
+
+import javax.mail.internet.AddressException;
+
+
 
 public class Main {
-	public static void main(String[] args) throws FileNotFoundException, PSTException, IOException {
+	public static void main(String[] args) throws FileNotFoundException, PSTException, IOException, AddressException, MessagingException {
 		String filename = "/Users/Emmanuel/Documents/Travail/Perso/Data Science/EIG/Sprints/01_PST/EG_16022018.pst";
 		try {
 			PSTFile pstFile = new PSTFile(filename);
@@ -82,6 +86,7 @@ public class Main {
 
     String file_path = "/Users/jean-baptiste/Desktop/testPst/backup.pst";
     Handler.handle(file_path);  
+
   }
 
 
