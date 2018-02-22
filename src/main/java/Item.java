@@ -1,3 +1,12 @@
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -77,14 +86,22 @@ public abstract class Item {
 		return res;
 	}
 	
-	/*public boolean write_CSV(Path filepath) {
-		File file = new File(filepath);
+	public boolean write_CSV(String filepath) throws IOException {
+		String str = get_CSVhead() + "\n" + this.get_CSV(null);
 		
-		file.append(get_CSVhead() + "\n");
-		file.append(this.get_CSVline(null));
-		
-		file.close();
-	}*/
+		OutputStream os = new FileOutputStream(filepath);
+	    os.write(239);
+	    os.write(187);
+	    os.write(191);
+
+	    PrintWriter w = new PrintWriter(new OutputStreamWriter(os, "UTF-8"));
+
+	    w.print(str);
+	    w.flush();
+	    w.close();
+
+	    return true;
+	}
 	
 	public static String surr(String s) {
 		return "\"" + (s != null ? s : "") + "\"";

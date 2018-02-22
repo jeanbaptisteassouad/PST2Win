@@ -22,7 +22,6 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        System.out.println(Item.get_CSVhead()); // Display the string.
         
         Attachment attach_test_1 = new Attachment(8, "img.jpg", 250000);
         Attachment attach_test_2 = new Attachment(9, "blabla.txt", 1);
@@ -68,7 +67,12 @@ public class Main {
         
         Folder folder_test_1 = new Folder(1, "Début du fichier", subfolders_F1);
         
-        System.out.println(folder_test_1.get_CSV(null));
+        try{
+        	folder_test_1.write_CSV("/Users/Emmanuel/Documents/Travail/Perso/Data Science/EIG/Sprints/01_PST/test_recolement.csv");
+        }
+        catch (IOException e) {
+        	e.printStackTrace();
+        }
         
         
     }
