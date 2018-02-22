@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
-public class PSTMessage extends PSTItem {
+public class Message extends Item {
 	
 	Person sender;
 	ArrayList<Person> receivers;
@@ -14,30 +14,25 @@ public class PSTMessage extends PSTItem {
 	
 	Date send_date;
 	
-	ArrayList<PSTAttachment> attachments;
-	PSTFolder parent_folder;
-	
 
-	public PSTMessage() {
+	public Message() {
 		super();
 		
 		this.sender = new Person();
 		this.receivers =  new ArrayList<Person>();
 		this.email_weight = 0;
 		this.send_date = new Date();
-		this.attachments =  new ArrayList<PSTAttachment>();
-		this.parent_folder = new PSTFolder();
+		this.children =  new ArrayList<Item>();
 	}
 
-	public PSTMessage(int ID, String name, Person sender, ArrayList<Person> receivers, int email_weight, Date send_date, ArrayList<PSTAttachment> attachments, PSTFolder parent_folder) {
+	public Message(int ID, String name, Person sender, ArrayList<Person> receivers, int email_weight, Date send_date, ArrayList<Item> attachments) {
 		this.ID = ID;
 		this.name = name;
-		this.sender = sender;
-		this.receivers =  receivers;
+		this.sender = (sender != null ? sender : new Person());
+		this.receivers =  (receivers != null ? receivers : new ArrayList<Person>());
 		this.email_weight = email_weight;
-		this.send_date = send_date;
-		this.attachments =  attachments;
-		this.parent_folder = parent_folder;
+		this.send_date = (send_date != null ? send_date : new Date());
+		this.children =  attachments;
 		
 		this.updateWeight();
 	}
@@ -46,8 +41,8 @@ public class PSTMessage extends PSTItem {
 	public void updateWeight() {
 		int res = this.email_weight;
 		
-		if(this.attachments != null) {
-			for(PSTItem item : this.attachments) {
+		if(this.children != null) {
+			for(Item item : this.children) {
 				res += item.weight;
 			}
 		}
@@ -55,10 +50,13 @@ public class PSTMessage extends PSTItem {
 		this.weight = res;
 	}
 	
-	public String write_CSVline() {
+	public String get_CSVline(Item parent) {
 		String res = "";
 		
 		res += surr(this.ID);
+		res += del;
+		
+		res += surr("E-mail");
 		res += del;
 		
 		res += surr(this.sender != null ? this.sender.emailAddress : "");
@@ -92,16 +90,16 @@ public class PSTMessage extends PSTItem {
 		res += surr(this.email_weight);
 		res += del;
 		
-		res += surr(this.parent_folder != null ? this.parent_folder.ID : 0);
+		res += surr(parent != null ? parent.ID : 0);
 		res += del;
 		
-		res += surr(this.parent_folder != null ? this.parent_folder.name : "");
+		res += surr(parent != null ? parent.name : "");
 		res += del;
 		
-		if(this.attachments != null) {
+		if(this.children != null) {
 			ArrayList<String> liste_PJs = new ArrayList<String>();
 			
-			for(PSTAttachment PJ : this.attachments) {
+			for(Item PJ : this.children) {
 				liste_PJs.add(PJ.name);
 			}
 			

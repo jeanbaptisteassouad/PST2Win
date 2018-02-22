@@ -2,26 +2,31 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public abstract class PSTItem {
+public abstract class Item {
 
 	int ID;
 	String name;
 	int weight;
+	ArrayList<Item> children;
 	
 	static String del = ",";
 	
-		public PSTItem() {
+		public Item() {
 			this.ID = 0;
 			this.name = "";
 			this.weight = 0;
+			this.children = new ArrayList<Item>();
 		}
 		
-	public abstract String write_CSVline();
+	public abstract String get_CSVline(Item parent);
 	
-	public static String write_CSVhead() {
+	public static String get_CSVhead() {
 		String res ="";
 		
 		res += surr("ID");
+		res += del;
+		
+		res += surr("Type");
 		res += del;
 		
 		res += surr("exp_adresse");
@@ -55,6 +60,31 @@ public abstract class PSTItem {
 		
 		return res;
 	}
+	
+	public String get_CSV(Item parent) {
+		
+		String res = "";
+		
+		res += this.get_CSVline(parent);
+		res += "\n";
+		
+		if(this.children != null) {
+			for(Item child : this.children) {
+				res += child.get_CSV(this);
+			}
+		}
+		
+		return res;
+	}
+	
+	/*public boolean write_CSV(Path filepath) {
+		File file = new File(filepath);
+		
+		file.append(get_CSVhead() + "\n");
+		file.append(this.get_CSVline(null));
+		
+		file.close();
+	}*/
 	
 	public static String surr(String s) {
 		return "\"" + (s != null ? s : "") + "\"";

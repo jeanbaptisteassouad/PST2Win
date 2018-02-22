@@ -2,23 +2,20 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class PSTFolder extends PSTItem {
+public class Folder extends Item {
 	
-	ArrayList<PSTItem> children;
-	PSTFolder parent_folder;
+	
 
 	
-	public PSTFolder() {
+	public Folder() {
 		super();
-		this.children = new ArrayList<PSTItem>();
-		this.parent_folder = null;
+		this.children = new ArrayList<Item>();
 	}
 	
-	public PSTFolder(int ID, String name, ArrayList<PSTItem> children, PSTFolder parent_folder) {
+	public Folder(int ID, String name, ArrayList<Item> children) {
 		this.ID = ID;
 		this.name = name;
 		this.children = children;
-		this.parent_folder = parent_folder;
 		
 		this.updateWeight();
 		
@@ -30,7 +27,7 @@ public class PSTFolder extends PSTItem {
 		int res = 0;
 		
 		if(this.children != null) {
-			for(PSTItem item : this.children) {
+			for(Item item : this.children) {
 				res += item.weight;
 			}
 		}
@@ -38,13 +35,16 @@ public class PSTFolder extends PSTItem {
 		this.weight = res;
 	}
 	
-	public String write_CSVline() {
+	public String get_CSVline(Item parent) {
 		
 		String res = "";
 		
 		res += surr(this.ID);
-		
 		res += del;
+		
+		res += surr("Répertoire");
+		res += del;
+		
 		res += del;
 		res += del;
 		res += del;
@@ -59,11 +59,11 @@ public class PSTFolder extends PSTItem {
 		res += del;
 		res += del;
 		
-		res += surr(this.parent_folder != null ? this.parent_folder.ID : 0);
+		res += surr(parent != null ? parent.ID : -1);
 		
 		res += del;
 
-		res += surr(this.parent_folder != null ? this.parent_folder.name : "[racine]");
+		res += surr(parent != null ? parent.name : "[racine]");
 		
 		res += del;
 		
