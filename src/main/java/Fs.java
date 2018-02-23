@@ -20,7 +20,6 @@ public class Fs {
 
   public static Path appendString2Path(Path a, String s) {
     s = escape(s);
-    // Debug.log(s);
     return a.resolve(s);
   }
 
