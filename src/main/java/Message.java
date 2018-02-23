@@ -59,6 +59,9 @@ public class Message extends Item {
 		res += surr("E-mail");
 		res += del;
 		
+		res += surr(this.name != null ? this.name : "");
+		res += del;
+		
 		res += surr(this.sender != null ? this.sender.emailAddress : "");
 		res += del;
 		
@@ -74,9 +77,6 @@ public class Message extends Item {
 			
 			res += surr(String.join(", ", liste_destinataires));
 		}
-		res += del;
-		
-		res += surr(this.name != null ? this.name : "");
 		res += del;
 		
 		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
@@ -105,6 +105,8 @@ public class Message extends Item {
 			
 			res += surr(String.join(", ", liste_PJs));
 		}
+		
+		res += del;
 		
 		return res;
 	}

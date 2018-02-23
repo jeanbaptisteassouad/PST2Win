@@ -38,34 +38,37 @@ public abstract class Item {
 		res += surr("Type");
 		res += del;
 		
-		res += surr("exp_adresse");
+		res += surr("Titre");
 		res += del;
 		
-		res += surr("exp_nom");
+		res += surr("From/adresse");
 		res += del;
 		
-		res += surr("liste_destinataires");
+		res += surr("From/nom");
 		res += del;
 		
-		res += surr("titre");
+		res += surr("Liste To");
 		res += del;
 		
-		res += surr("date_envoi");
+		res += surr("Date d'envoi");
 		res += del;
 		
-		res += surr("poids");
+		res += surr("Poids");
 		res += del;
 		
-		res += surr("poids_email_seul");
+		res += surr("Poids du mail seul");
 		res += del;
 		
-		res += surr("parent_ID");
+		res += surr("Parent/ID");
 		res += del;
 		
-		res += surr("parent_titre");
+		res += surr("Parent/Titre");
 		res += del;
 		
-		res += surr("liste_PJs");
+		res += surr("Liste PJs");
+		res += del;
+		
+		res += surr("Lien");
 		
 		return res;
 	}
