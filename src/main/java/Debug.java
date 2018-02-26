@@ -13,4 +13,10 @@ public class Debug {
     ans += o.toString();
     System.out.println(ans);
   }
+  
+  public static void print(Object o) { 
+    String ans = "";
+    ans += o.toString();
+    System.out.println(ans);
+  }
 }
