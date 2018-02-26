@@ -32,11 +32,6 @@ public class GUIApp implements ActionListener, Runnable {
 			e.printStackTrace();
 		}
 	}
-	
-	private void redirectSystemStreams() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public void insertOptions() {
 		this.mainWindow.containerField.setText(this.sourcePath);
@@ -60,10 +55,10 @@ public class GUIApp implements ActionListener, Runnable {
 	private String selectPath(String folder, boolean dirBool) {
 		File file;
 
-		JFileChooser fileChooser = new JFileChooser();
+		JFileChooser fileChooser = new JFileChooser(System.getProperty("user.home"));
 		fileChooser
 				.setFileSelectionMode((dirBool ? JFileChooser.DIRECTORIES_ONLY : JFileChooser.FILES_AND_DIRECTORIES));
-		fileChooser.setFileHidingEnabled(false);
+		//fileChooser.setFileHidingEnabled(false);
 		file = new File(folder);
 		if (file.exists())
 			fileChooser.setSelectedFile(file);
@@ -83,12 +78,65 @@ public class GUIApp implements ActionListener, Runnable {
 	static final int EMPTY_LOG = 2;
 	
 	private void doAction(int actionNumber) {
-
 		if (actionNumber == EMPTY_LOG) {
 			mainWindow.consoleTextArea.setText("");
-		} else {
-			// Code pour extraire
+		}
+		else {
+			// On change le bouton Extraire en bouton Stop
+			
+			// Code pour faire tourner le Handler
+			/*
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					try{
+						Handler.handle(mainWindow.containerField.getText());
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			*/
+			
+			HandlerThread thread = new HandlerThread(mainWindow.containerField.getText());
+			thread.run();
+			
+			
+			//On remet le bouton Extraire
+			
 		}
 	}
+	
+	// used to update console text area
+		private void updateTextArea(final String text) {
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					mainWindow.consoleTextArea.append(text);
+				}
+			});
+		}
+
+		// used to redirect out console stream to text area (no err redirection to
+		// avoid tika and other tools errors...)
+		private void redirectSystemStreams() {
+			OutputStream out = new OutputStream() {
+				@Override
+				public void write(int b) throws IOException {
+					updateTextArea(String.valueOf((char) b));
+				}
+
+				@Override
+				public void write(byte[] b, int off, int len) throws IOException {
+					updateTextArea(new String(b, off, len));
+				}
+
+				@Override
+				public void write(byte[] b) throws IOException {
+					write(b, 0, b.length);
+				}
+			};
+
+			System.setOut(new PrintStream(out, true));
+			// System.setErr(new PrintStream(out, true));
+		}
 
 }
