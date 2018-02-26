@@ -14,7 +14,7 @@ import javax.mail.internet.AddressException;
 public class Main {
 	public static void main(String[] args) throws FileNotFoundException, PSTException, IOException, AddressException, MessagingException {
     String file_path = "/Users/jean-baptiste/Desktop/testPst/backup.pst";
-    Handler.handle(file_path);  
+    new Handler(file_path);
   }
 
 
