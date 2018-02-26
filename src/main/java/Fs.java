@@ -36,6 +36,8 @@ public class Fs {
     byte[] byte_array = s.getBytes(StandardCharsets.US_ASCII);
     s = new String(byte_array, StandardCharsets.US_ASCII);
     
+    s = s.replaceAll("[\\\\/:\\*?\"<>|]","");
+
     return s;
   }
 
