@@ -26,8 +26,12 @@ public class Handler extends State {
 
     PSTFolder root = (new PSTFile(file_path)).getRootFolder();
 
+    Debug.print("Début de l'extraction ...");
     Folder f = handleFolder(root, root_dir_path);
+    Debug.print("Extraction terminée, écriture du bordereau de récolement ...");
     writeProofing(f,root_dir_path);
+    Debug.print("Terminé !");
+    Debug.print("--------------------------------");
   }
   
   private static void mkWorkingDir(Path root_dir_path) {

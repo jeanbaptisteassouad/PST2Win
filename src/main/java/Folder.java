@@ -45,13 +45,12 @@ public class Folder extends Item {
 		res += surr("Répertoire");
 		res += del;
 		
-		res += del;
-		res += del;
-		res += del;
-
 		res += surr(this.name);
 		
-		res += del;		
+		res += del;	
+		res += del;
+		res += del;
+		res += del;
 		res += del;
 		
 		res += surr(this.weight);
@@ -65,6 +64,7 @@ public class Folder extends Item {
 
 		res += surr(parent != null ? parent.name : "[racine]");
 		
+		res += del;
 		res += del;
 		
 		return res;

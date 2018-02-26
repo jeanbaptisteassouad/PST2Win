@@ -12,12 +12,11 @@ import javax.mail.internet.AddressException;
 
 
 public class Main {
-	public static void main(String[] args) throws FileNotFoundException, PSTException, IOException, AddressException, MessagingException {
-    String file_path = "/Users/jean-baptiste/Desktop/testPst/backup.pst";
-    new Handler(file_path);
-  }
-
-
+	public static void main(String[] args) {
+        GUIApp app = new GUIApp("");
+        app.run();
+        
+    }
 }
 
 

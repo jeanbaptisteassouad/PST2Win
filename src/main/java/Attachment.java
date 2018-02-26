@@ -25,6 +25,9 @@ public class Attachment extends Item {
 		res += surr("PJ");
 		res += del;
 		
+		res += surr(this.name);
+		res += del;
+		
 		if(parent != null) {
 			res += surr(((Message)parent).sender.emailAddress);
 			res += del;
@@ -39,9 +42,6 @@ public class Attachment extends Item {
 			}
 			
 			res += surr(String.join(", ", liste_destinataires));
-			res += del;
-			
-			res += surr(this.name);
 			res += del;
 			
 			DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
@@ -75,10 +75,6 @@ public class Attachment extends Item {
 			res += del;
 			res += del;
 			res += del;
-			
-			res += surr(this.name);
-			res += del;
-			
 			res += del;
 			
 			res += surr(this.weight);
@@ -90,6 +86,7 @@ public class Attachment extends Item {
 			
 		}
 		
+		res += del;
 		
 		return res;
 	}
