@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -112,6 +113,30 @@ public abstract class Item {
 	
 	public static String surr(int i) {
 		return "\"" + Integer.toString(i) + "\"";
+	}
+	
+	public static String write_smart_size(int size) {
+		
+		int n = 4;
+		
+		while(size / (Math.pow(1024, n)) < 1 && n > 0) {
+			n--;
+		}
+		
+		double newSize = size / (Math.pow(1024, n));
+		
+		String suffix = "";
+		switch (n){
+			case 0: suffix = "o"; break;
+			case 1: suffix = "ko"; break;
+			case 2: suffix = "Mo"; break;
+			case 3: suffix = "Go"; break;
+			case 4: suffix = "To"; break;
+		}
+		
+		DecimalFormat numberFormat = new DecimalFormat("#.##");
+		
+		return numberFormat.format(newSize) + " " + suffix;
 	}
 	
 }
