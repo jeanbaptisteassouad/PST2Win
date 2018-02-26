@@ -209,7 +209,7 @@ public class GUIWindow extends JFrame {
 		gbc_extractButton.gridy = 3;
 		getContentPane().add(extractButton, gbc_extractButton);
 		extractButton.setActionCommand("extract");
-		//extractButton.addActionListener(app);
+		extractButton.addActionListener(app);
 
 		JButton emptyButton = new JButton("Vider log");
 		GridBagConstraints gbc_emptyButton = new GridBagConstraints();
@@ -219,7 +219,7 @@ public class GUIWindow extends JFrame {
 		gbc_emptyButton.gridy = 5;
 		getContentPane().add(emptyButton, gbc_emptyButton);
 		emptyButton.setActionCommand("empty");
-		//emptyButton.addActionListener(app);
+		emptyButton.addActionListener(app);
 
 		/*warningCheckBox =  new JCheckBox("Remonte les pbs sur les messages");
 		GridBagConstraints gbc_warningCheckBox = new GridBagConstraints();
@@ -385,7 +385,7 @@ public class GUIWindow extends JFrame {
 		gbc_containerButton.gridy = 1;
 		getContentPane().add(containerButton, gbc_containerButton);
 		containerButton.setActionCommand("container");
-		//containerButton.addActionListener(app);
+		containerButton.addActionListener(app);
 
 		
 
