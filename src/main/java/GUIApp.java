@@ -16,6 +16,8 @@ public class GUIApp implements ActionListener, Runnable {
 
 	/** The parameters */
 	String sourcePath = "";
+	
+	HandlerThread thread = null;
 
 	public GUIApp(String sourcePath) {
 		this.mainWindow = new GUIWindow(this);
@@ -47,6 +49,8 @@ public class GUIApp implements ActionListener, Runnable {
 		}
 		else if (command.equals("extract"))
 			doAction(EXTRACT_ACTION);
+		else if (command.equals("stop"))
+			doAction(STOP_EXTRACT);
 		else if (command.equals("empty"))
 			doAction(EMPTY_LOG);
 
@@ -77,32 +81,28 @@ public class GUIApp implements ActionListener, Runnable {
 	/** The Constant EMPTY_LOG. */
 	static final int EMPTY_LOG = 2;
 	
+	/** The Constant STOP_EXTRACT. */
+	static final int STOP_EXTRACT = 3;
+	
 	private void doAction(int actionNumber) {
+		
 		if (actionNumber == EMPTY_LOG) {
 			mainWindow.consoleTextArea.setText("");
 		}
-		else {
-			// On change le bouton Extraire en bouton Stop
+		else if (actionNumber == EXTRACT_ACTION){
 			
-			// Code pour faire tourner le Handler
-			/*
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					try{
-						Handler.handle(mainWindow.containerField.getText());
-					} catch(Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
-			*/
-			
-			HandlerThread thread = new HandlerThread(mainWindow.containerField.getText());
-			thread.run();
-			
-			
+			this.mainWindow.set_extract_to_stop();
+
+			this.thread = new HandlerThread(mainWindow.containerField.getText());
+			thread.start();
+
 			//On remet le bouton Extraire
 			
+		}
+		else if(actionNumber == STOP_EXTRACT) {
+			this.thread.interrupt();
+			Debug.print("-- Interrompu --");
+			this.mainWindow.set_stop_to_extract();
 		}
 	}
 	

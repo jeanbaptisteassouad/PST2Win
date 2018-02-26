@@ -11,7 +11,7 @@ public class HandlerThread extends Thread {
 		
 		
 		try {
-			Handler.handle(this.filepath);
+			Handler handler = new Handler(this.filepath);
 		}
 		catch(Exception e) {
 			e.printStackTrace();

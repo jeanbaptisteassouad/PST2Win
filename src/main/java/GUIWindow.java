@@ -44,6 +44,9 @@ public class GUIWindow extends JFrame {
 
 	/** The container button. */
 	JButton containerButton;
+	
+	/** The extract button. */
+	JButton extractButton;
 
 	/** The loglevel combo box. 
 	@SuppressWarnings("rawtypes")
@@ -200,7 +203,7 @@ public class GUIWindow extends JFrame {
 		gbc_scrollPane.gridy = 4;
 		getContentPane().add(scrollPane, gbc_scrollPane);
 
-		JButton extractButton = new JButton("Extraire messages");
+		extractButton = new JButton("Extraire messages");
 		GridBagConstraints gbc_extractButton = new GridBagConstraints();
 		gbc_extractButton.gridwidth = 2;
 		gbc_extractButton.insets = new Insets(0, 150, 0, 150);
@@ -390,6 +393,16 @@ public class GUIWindow extends JFrame {
 		
 
 		pack();
+	}
+	
+	void set_extract_to_stop() {
+		this.extractButton.setText("Interrompre l'extraction");
+		extractButton.setActionCommand("stop");
+	}
+	
+	void set_stop_to_extract() {
+		this.extractButton.setText("Extraire messages");
+		extractButton.setActionCommand("extract");
 	}
 
 }
