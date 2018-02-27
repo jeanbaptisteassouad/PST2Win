@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ public abstract class Item {
 
 	int ID;
 	String name;
-	int weight;
+	long weight;
 	ArrayList<Item> children;
 	
 	static String del = ",";
@@ -53,7 +54,13 @@ public abstract class Item {
 		res += surr("Date d'envoi");
 		res += del;
 		
+		res += surr("Poids brut");
+		res += del;
+		
 		res += surr("Poids");
+		res += del;
+		
+		res += surr("Poids brut du mail seul");
 		res += del;
 		
 		res += surr("Poids du mail seul");
@@ -112,6 +119,35 @@ public abstract class Item {
 	
 	public static String surr(int i) {
 		return "\"" + Integer.toString(i) + "\"";
+	}
+	
+	public static String surr(double d) {
+		DecimalFormat numberFormat = new DecimalFormat("#");
+		return "\"" + numberFormat.format(d) + "\"";
+	}
+	
+	public static String write_smart_size(long size) {
+		
+		int n = 4;
+		
+		while(size / (Math.pow(1024, n)) < 1 && n > 0) {
+			n--;
+		}
+		
+		double newSize = size / (Math.pow(1024, n));
+		
+		String suffix = "";
+		switch (n){
+			case 0: suffix = "o"; break;
+			case 1: suffix = "ko"; break;
+			case 2: suffix = "Mo"; break;
+			case 3: suffix = "Go"; break;
+			case 4: suffix = "To"; break;
+		}
+		
+		DecimalFormat numberFormat = new DecimalFormat("#.##");
+		
+		return numberFormat.format(newSize) + " " + suffix;
 	}
 	
 }

@@ -10,7 +10,7 @@ public class Message extends Item {
 	Person sender;
 	ArrayList<Person> receivers;
 	
-	int email_weight;
+	long email_weight;
 	
 	Date send_date;
 	
@@ -25,7 +25,7 @@ public class Message extends Item {
 		this.children =  new ArrayList<Item>();
 	}
 
-	public Message(int ID, String name, Person sender, ArrayList<Person> receivers, int email_weight, Date send_date, ArrayList<Item> attachments) {
+	public Message(int ID, String name, Person sender, ArrayList<Person> receivers, long email_weight, Date send_date, ArrayList<Item> attachments) {
 		this.ID = ID;
 		this.name = name;
 		this.sender = (sender != null ? sender : new Person());
@@ -39,7 +39,7 @@ public class Message extends Item {
 	
 	
 	public void updateWeight() {
-		int res = this.email_weight;
+		long res = this.email_weight;
 		
 		if(this.children != null) {
 			for(Item item : this.children) {
@@ -79,7 +79,7 @@ public class Message extends Item {
 		}
 		res += del;
 		
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		
 		res += surr(this.send_date != null ? df.format(this.send_date) : "");
 		res += del;
@@ -87,7 +87,13 @@ public class Message extends Item {
 		res += surr(this.weight);
 		res += del;
 		
+		res += surr(write_smart_size(this.weight));
+		res += del;
+		
 		res += surr(this.email_weight);
+		res += del;
+		
+		res += surr(write_smart_size(this.email_weight));
 		res += del;
 		
 		res += surr(parent != null ? parent.ID : 0);

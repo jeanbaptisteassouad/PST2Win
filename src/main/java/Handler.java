@@ -154,7 +154,7 @@ public class Handler extends State {
 
   private static Message message2Proofing(PSTMessage message,String message_name, int message_count, ArrayList<Item> list) {
     Person sender = new Person(message.getSenderEmailAddress(),message.getSenderName());
-    int size = (int) message.getMessageSize();
+    long size = message.getMessageSize();
     Date time = message.getClientSubmitTime();
     return new Message(message_count,message_name,sender,new ArrayList<>(),size,time, list);
   }
