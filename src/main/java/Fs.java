@@ -18,8 +18,9 @@ public class Fs {
     return p.getParent().resolve(p.getFileName().toString().replaceAll(".pst", ""));
   }
 
-  public static Path appendString2Path(Path a, String s) {
-    s = escape(s);
+  public static Path appendString2Path(Path a, String s, String extension) {
+    s = escape(s) + extension;
+    
     return a.resolve(s);
   }
 
@@ -36,7 +37,16 @@ public class Fs {
     byte[] byte_array = s.getBytes(StandardCharsets.US_ASCII);
     s = new String(byte_array, StandardCharsets.US_ASCII);
     
-    s = s.replaceAll("[\\\\/:\\*?\"<>|]","");
+    s = s.replaceAll("[\\\\/:\\*?\"\\.<>|]","");
+    
+    //int i = s.lastIndexOf('.');
+    
+    //if(i >= 0)
+    	//	s = s.substring(0, i).replaceAll("\\.","") + s.substring(i, s.length());
+    
+    if(s.length() > 30)
+    		s = s.substring(0, 30) + "_";
+    
 
     return s;
   }
@@ -49,7 +59,14 @@ public class Fs {
 
   public static void writeString(Path p, String s) throws IOException {
     byte[] strToBytes = s.getBytes();
-    Files.write(p, strToBytes);
+    try{
+    	Files.write(p, strToBytes);
+    } catch (Exception e) {
+    	System.out.println("Erreur à l'écriture du fichier");
+    	System.out.println(p);
+    	e.printStackTrace();
+    }
+    
   }
 
   public static void writeStream(Path p, InputStream inStream) throws IOException {
