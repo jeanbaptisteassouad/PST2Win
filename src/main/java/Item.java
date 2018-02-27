@@ -16,7 +16,7 @@ public abstract class Item {
 
 	int ID;
 	String name;
-	int weight;
+	long weight;
 	ArrayList<Item> children;
 	
 	static String del = ",";
@@ -54,7 +54,13 @@ public abstract class Item {
 		res += surr("Date d'envoi");
 		res += del;
 		
+		res += surr("Poids brut");
+		res += del;
+		
 		res += surr("Poids");
+		res += del;
+		
+		res += surr("Poids brut du mail seul");
 		res += del;
 		
 		res += surr("Poids du mail seul");
@@ -115,7 +121,12 @@ public abstract class Item {
 		return "\"" + Integer.toString(i) + "\"";
 	}
 	
-	public static String write_smart_size(int size) {
+	public static String surr(double d) {
+		DecimalFormat numberFormat = new DecimalFormat("#");
+		return "\"" + numberFormat.format(d) + "\"";
+	}
+	
+	public static String write_smart_size(long size) {
 		
 		int n = 4;
 		

@@ -9,7 +9,7 @@ public class Attachment extends Item {
 		super();
 	}
 	
-	public Attachment(int ID, String name, int weight) {
+	public Attachment(int ID, String name, long weight) {
 		this.ID = ID;
 		this.name = name;
 		this.weight = weight;
@@ -44,7 +44,7 @@ public class Attachment extends Item {
 			res += surr(String.join(", ", liste_destinataires));
 			res += del;
 			
-			DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			
 			res += surr(df.format(((Message)parent).send_date));
 			res += del;
@@ -52,7 +52,13 @@ public class Attachment extends Item {
 			res += surr(this.weight);
 			res += del;
 			
+			res += surr(write_smart_size(this.weight));
+			res += del;
+			
 			res += surr(((Message)parent).email_weight);
+			res += del;
+			
+			res += surr(write_smart_size(((Message)parent).email_weight));
 			res += del;
 			
 			res += surr(((Message)parent).ID);
@@ -80,6 +86,10 @@ public class Attachment extends Item {
 			res += surr(this.weight);
 			res += del;
 			
+			res += surr(write_smart_size(this.weight));
+			res += del;
+			
+			res += del;
 			res += del;
 			res += del;
 			res += del;

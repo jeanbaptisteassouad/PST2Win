@@ -24,7 +24,7 @@ public class Folder extends Item {
 	
 	
 	public void updateWeight() {
-		int res = 0;
+		long res = 0;
 		
 		if(this.children != null) {
 			for(Item item : this.children) {
@@ -55,6 +55,11 @@ public class Folder extends Item {
 		
 		res += surr(this.weight);
 		
+		res += del;
+		
+		res += surr(write_smart_size(this.weight));
+		
+		res += del;
 		res += del;
 		res += del;
 		
