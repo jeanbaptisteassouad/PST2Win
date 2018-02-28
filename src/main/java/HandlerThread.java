@@ -1,4 +1,9 @@
+import java.io.IOException;
 import java.nio.channels.ClosedByInterruptException;
+
+import javax.mail.MessagingException;
+
+import com.pff.PSTException;
 
 public class HandlerThread extends Thread {
 
@@ -20,15 +25,26 @@ public class HandlerThread extends Thread {
 			//	window.set_extract_to_stop();
 			
 			try {
-				Handler handler = new Handler(this.filepath);
+			Handler handler = new Handler(this.filepath);
 			}
-			catch(Exception e) {
+			catch (MessagingException e) {
+				e.printStackTrace();
+			}
+			catch (ClosedByInterruptException e) {
+				Debug.print("--- Interrompu ---");
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+			catch (PSTException e) {
 				e.printStackTrace();
 			}
 			finally {
-				if(window != null)
-					window.set_stop_to_extract();
+			if(window != null)
+				window.set_stop_to_extract();
 			}
+			
+		
 
 	}
 

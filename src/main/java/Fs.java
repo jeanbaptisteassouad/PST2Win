@@ -3,6 +3,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.channels.ClosedByInterruptException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,7 +20,7 @@ public class Fs {
   }
 
   public static Path appendString2Path(Path a, String s, String extension) {
-    s = escape(s) + extension;
+    s = escape(s + extension);
     
     return a.resolve(s);
   }
@@ -37,15 +38,20 @@ public class Fs {
     byte[] byte_array = s.getBytes(StandardCharsets.US_ASCII);
     s = new String(byte_array, StandardCharsets.US_ASCII);
     
-    s = s.replaceAll("[\\\\/:\\*?\"\\.<>|]","");
+    int i = s.lastIndexOf('.');
     
-    //int i = s.lastIndexOf('.');
+    if(i >= 0)
+    		s = s.substring(0, i).replaceAll("\\.","") + s.substring(i, s.length());
     
-    //if(i >= 0)
-    	//	s = s.substring(0, i).replaceAll("\\.","") + s.substring(i, s.length());
+    s = s.replaceAll("[\\\\/:\\*?\"<>|]","");
     
-    if(s.length() > 30)
-    		s = s.substring(0, 30) + "_";
+    i = s.lastIndexOf('.');
+    
+    if(i > 30)
+    		s = s.substring(0, 30) + "_" + s.substring(i,s.length());
+    
+    if(s.length() > 40)
+    		s = s.substring(0,40) + "_";
     
 
     return s;
@@ -61,11 +67,16 @@ public class Fs {
     byte[] strToBytes = s.getBytes();
     try{
     	Files.write(p, strToBytes);
-    } catch (Exception e) {
+    } 
+    catch(ClosedByInterruptException e) {
+    	throw e;
+    }
+    catch (IOException e) {
     	System.out.println("Erreur à l'écriture du fichier");
     	System.out.println(p);
     	e.printStackTrace();
     }
+    
     
   }
 

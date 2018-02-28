@@ -135,17 +135,21 @@ public class Handler extends State {
   }
 
   private static Path message2Dir(PSTMessage message, Path parent_dir_path, String message_name, int count) {
-    try{
-	    	Path dir_path = Fs.appendString2Path(parent_dir_path, message_name,"");
-	    	Fs.mkdir(dir_path);
-	    return dir_path;
-    }
-    catch (Exception e) {
-	    	System.out.println(e.getMessage());
-	    	Path dir_path = Fs.appendString2Path(parent_dir_path, "[M"+Integer.toString(count)+"]", "");
-	    	Fs.mkdir(dir_path);
-		return dir_path;
-    }
+		//System.out.println(e.getMessage());
+		Path dir_path = Fs.appendString2Path(parent_dir_path, message_name,"");
+    	Fs.mkdir(dir_path);
+	return dir_path;
+//    try{
+//	    	Path dir_path = Fs.appendString2Path(parent_dir_path, message_name,"");
+//	    	Fs.mkdir(dir_path);
+//	    return dir_path;
+//    }
+//    catch (FileNotFoundException e) {
+//	    	System.out.println(e.getMessage());
+//	    	Path dir_path = Fs.appendString2Path(parent_dir_path, "[M"+Integer.toString(count)+"]", "");
+//	    	Fs.mkdir(dir_path);
+//		return dir_path;
+//    }
   }
 
   private static void message2Files(PSTMessage message, Path dir_path, String message_name)
