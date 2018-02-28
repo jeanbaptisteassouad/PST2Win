@@ -19,7 +19,7 @@ public abstract class Item {
 	long weight;
 	ArrayList<Item> children;
 	
-	static String del = ",";
+	static String del = ";";
 	
 		public Item() {
 			this.ID = 0;
