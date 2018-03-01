@@ -1,15 +1,9 @@
-import java.io.BufferedWriter;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public abstract class Item {
@@ -19,7 +13,7 @@ public abstract class Item {
 	long weight;
 	ArrayList<Item> children;
 	
-	static String del = ",";
+	static String del = ";";
 	
 		public Item() {
 			this.ID = 0;

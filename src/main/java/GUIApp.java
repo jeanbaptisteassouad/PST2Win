@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.nio.channels.ClosedByInterruptException;
 
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
@@ -40,7 +41,7 @@ public class GUIApp implements ActionListener, Runnable {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		String command = e.getActionCommand();
+		try{String command = e.getActionCommand();
 		
 		if (command.equals("container")) {
 			String filename = selectPath(mainWindow.containerField.getText(), false);
@@ -53,6 +54,8 @@ public class GUIApp implements ActionListener, Runnable {
 			doAction(STOP_EXTRACT);
 		else if (command.equals("empty"))
 			doAction(EMPTY_LOG);
+		} catch(ClosedByInterruptException exc) {Debug.print("-- Interrompu --");
+		this.mainWindow.set_stop_to_extract();}
 
 	}
 	
@@ -75,6 +78,9 @@ public class GUIApp implements ActionListener, Runnable {
 			return null;
 	}
 	
+	
+	
+	
 	/** The Constant EXTRACT_ACTION. */
 	static final int EXTRACT_ACTION = 1;
 
@@ -84,7 +90,7 @@ public class GUIApp implements ActionListener, Runnable {
 	/** The Constant STOP_EXTRACT. */
 	static final int STOP_EXTRACT = 3;
 	
-	private void doAction(int actionNumber) {
+	private void doAction (int actionNumber) throws ClosedByInterruptException {
 		
 		if (actionNumber == EMPTY_LOG) {
 			mainWindow.consoleTextArea.setText("");
@@ -93,18 +99,20 @@ public class GUIApp implements ActionListener, Runnable {
 			
 			this.mainWindow.set_extract_to_stop();
 
-			this.thread = new HandlerThread(mainWindow.containerField.getText());
+			this.thread = new HandlerThread(mainWindow.containerField.getText(), this.mainWindow);
 			thread.start();
 
-			//On remet le bouton Extraire
-			
 		}
 		else if(actionNumber == STOP_EXTRACT) {
+			
 			this.thread.interrupt();
-			Debug.print("-- Interrompu --");
-			this.mainWindow.set_stop_to_extract();
 		}
+		
 	}
+	
+	
+	
+	
 	
 	// used to update console text area
 		private void updateTextArea(final String text) {

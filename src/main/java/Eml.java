@@ -1,9 +1,7 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Message;
