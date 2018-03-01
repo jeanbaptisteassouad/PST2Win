@@ -70,7 +70,7 @@ public class Handler extends State {
   }
 
   private static Path folder2Dir(PSTFolder folder, Path parent_dir_path, String folder_name) {
-    Path dir_path = Fs.appendString2Path(parent_dir_path, folder_name, "");
+    Path dir_path = Fs.appendStr2DirPath(parent_dir_path, folder_name);
     Fs.mkdir(dir_path);
     return dir_path;
   }
@@ -122,7 +122,7 @@ public class Handler extends State {
 
     Debug.print(message_name);
 
-    Path dir_path = message2Dir(message,parent_dir_path,message_name, message_count);
+    Path dir_path = message2Dir(message,parent_dir_path,message_name);
 
     ArrayList<Item> list = loopAttachments(message, dir_path);
     
@@ -134,32 +134,20 @@ public class Handler extends State {
     return "[M"+message_count+"]"+message.getSubject();
   }
 
-  private static Path message2Dir(PSTMessage message, Path parent_dir_path, String message_name, int count) {
-		//System.out.println(e.getMessage());
-		Path dir_path = Fs.appendString2Path(parent_dir_path, message_name,"");
-    	Fs.mkdir(dir_path);
-	return dir_path;
-//    try{
-//	    	Path dir_path = Fs.appendString2Path(parent_dir_path, message_name,"");
-//	    	Fs.mkdir(dir_path);
-//	    return dir_path;
-//    }
-//    catch (FileNotFoundException e) {
-//	    	System.out.println(e.getMessage());
-//	    	Path dir_path = Fs.appendString2Path(parent_dir_path, "[M"+Integer.toString(count)+"]", "");
-//	    	Fs.mkdir(dir_path);
-//		return dir_path;
-//    }
+  private static Path message2Dir(PSTMessage message, Path parent_dir_path, String message_name) {
+    Path dir_path = Fs.appendStr2DirPath(parent_dir_path, message_name);
+    Fs.mkdir(dir_path);
+    return dir_path;
   }
 
   private static void message2Files(PSTMessage message, Path dir_path, String message_name)
       throws IOException, AddressException, MessagingException {
-    Path txt_file_path = Fs.appendString2Path(dir_path, message_name,".txt");
+    Path txt_file_path = Fs.appendStr2FilePath(dir_path, message_name+".txt");
     Fs.writeString(txt_file_path, message.getBody());
-    Path html_file_path = Fs.appendString2Path(dir_path, message_name,".html");
+    Path html_file_path = Fs.appendStr2FilePath(dir_path, message_name+".html");
     Fs.writeString(html_file_path, message.getBodyHTML());
     if (message.getClass() == PSTMessage.class) {
-      Path eml_file_path = Fs.appendString2Path(dir_path, message_name,".eml");
+      Path eml_file_path = Fs.appendStr2FilePath(dir_path, message_name+".eml");
       Eml.convert2Eml(message,eml_file_path);
     }
   }
@@ -211,29 +199,14 @@ public class Handler extends State {
   }
 
   private static Path attachment2Dir(PSTAttachment attach, Path parent_dir_path, String attach_name) {
-    Path dir_path = Fs.appendString2Path(parent_dir_path, attach_name, "");
+    Path dir_path = Fs.appendStr2DirPath(parent_dir_path, attach_name);
     Fs.mkdir(dir_path);
     return dir_path;
   }
 
   private static void attachment2Files(PSTAttachment attach, Path dir_path, String attach_name)
       throws IOException, PSTException {
-	  
-	  	int i = attach_name.lastIndexOf('.');
-	  	
-	  	String s;
-	  	String ext;
-	    
-	    if(i >= 0){
-	    	s = attach_name.substring(0, i).replaceAll("\\.","");
-	    	ext = attach_name.substring(i, attach_name.length());
-	    	}
-	    else {
-	    s = attach_name;
-	    ext = "";
-	    }
-	  
-    Path file_path = Fs.appendString2Path(dir_path, s, ext);
+    Path file_path = Fs.appendStr2FilePath(dir_path, attach_name);
     Fs.writeStream(file_path, attach.getFileInputStream());
   }
 

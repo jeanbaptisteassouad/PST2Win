@@ -19,14 +19,37 @@ public class Fs {
     return p.getParent().resolve(p.getFileName().toString().replaceAll(".pst", ""));
   }
 
-  public static Path appendString2Path(Path a, String s, String extension) {
-    s = escape(s + extension);
-    
-    return a.resolve(s);
+  public static Path appendStr2DirPath(Path a, String s) {
+    return a.resolve(escape(s,40));
   }
 
-  private static String escape(String s) {
+  public static Path appendStr2FilePath(Path a, String s) {
+    String ext = "";
+    String s_without_ext = s;
+    
+    int i = s.lastIndexOf('.');
+    if(i >= 0) {
+      s_without_ext = s.substring(0, i).replaceAll("\\.","");
+      ext = s.substring(i, s.length());
+    }
+
+    String ans = escape(s_without_ext,30) + "." + escape(ext,4);
+    
+    return a.resolve(ans);
+  }
+
+  private static String escape(String s, int thr) {
     s = s.replaceAll("[ /]","_");
+
+    s = convert2ASCII(s);
+    s = escapeDot(s);
+    s = removeInvalidWinPathChar(s);
+    s = truncateStrLength(s,thr);
+
+    return s;
+  }
+
+  private static String convert2ASCII(String s) {
     s = replaceAllInsensitive(s,"[éèê]","e");
     s = replaceAllInsensitive(s,"[àâ]","a");
     s = replaceAllInsensitive(s,"[ç]","c");
@@ -34,25 +57,22 @@ public class Fs {
     s = replaceAllInsensitive(s,"[î]","i");
     s = s.replaceAll("[«»]","\"");
 
-
     byte[] byte_array = s.getBytes(StandardCharsets.US_ASCII);
     s = new String(byte_array, StandardCharsets.US_ASCII);
-    
-    int i = s.lastIndexOf('.');
-    
-    if(i >= 0)
-    		s = s.substring(0, i).replaceAll("\\.","") + s.substring(i, s.length());
-    
-    s = s.replaceAll("[\\\\/:\\*?\"<>|]","");
-    
-    i = s.lastIndexOf('.');
-    
-    if(i > 30)
-    		s = s.substring(0, 30) + "_" + s.substring(i,s.length());
-    
-    if(s.length() > 40)
-    		s = s.substring(0,40) + "_";
-    
+    return s;
+  }
+
+  private static String escapeDot(String s) {
+    return s.replaceAll("\\.","");
+  }
+
+  private static String removeInvalidWinPathChar(String s) {
+    return s.replaceAll("[\\\\/:\\*?\"<>|]","");
+  }
+
+  private static String truncateStrLength(String s, int thr) {
+    if(s.length() > thr)
+      s = s.substring(0,thr) + "_";
 
     return s;
   }
@@ -63,21 +83,19 @@ public class Fs {
     return s;
   }
 
+
+
   public static void writeString(Path p, String s) throws IOException {
     byte[] strToBytes = s.getBytes();
-    try{
-    	Files.write(p, strToBytes);
-    } 
-    catch(ClosedByInterruptException e) {
-    	throw e;
+    try {
+      Files.write(p, strToBytes);
+    } catch(ClosedByInterruptException e) {
+      throw e;
+    } catch (IOException e) {
+      System.out.println("Erreur à l'écriture du fichier");
+      System.out.println(p);
+      e.printStackTrace();
     }
-    catch (IOException e) {
-    	System.out.println("Erreur à l'écriture du fichier");
-    	System.out.println(p);
-    	e.printStackTrace();
-    }
-    
-    
   }
 
   public static void writeStream(Path p, InputStream inStream) throws IOException {

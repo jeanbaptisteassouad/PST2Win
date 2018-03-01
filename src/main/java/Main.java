@@ -1,14 +1,5 @@
 
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import com.pff.*;
-
-import javax.mail.MessagingException;
-
-import javax.mail.internet.AddressException;
-
 
 
 public class Main {

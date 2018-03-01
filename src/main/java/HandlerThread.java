@@ -25,7 +25,7 @@ public class HandlerThread extends Thread {
 			//	window.set_extract_to_stop();
 			
 			try {
-			Handler handler = new Handler(this.filepath);
+			new Handler(this.filepath);
 			}
 			catch (MessagingException e) {
 				e.printStackTrace();
